@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model listing {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  price       Float
+  unit        String   @default("quintal")
+  quantity    Float
+  location    String
+  badge       String?
+  image       String   @default("")
+  farmer      String   @default("Anonymous Farmer")
+  cropType    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model order {
+  id        String   @id
+  crop      String
+  processor String
+  seller    String
+  qty       String
+  total     String
+  status    String   @default("Pending")
+  date      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model user {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique(map: "User_email_key")
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
